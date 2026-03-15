@@ -41,6 +41,16 @@ export const treeData = {
           name: "Đất Rừng Phương Nam",
           file: "/books/van-hoc/DatRungPhuongNam.epub",
         },
+        {
+          id: "vh-8",
+          name: "Hạt Giống Tâm Hồn Tập 1",
+          file: "/books/van-hoc/HatGiongTamHon1.pdf",
+        },
+        {
+          id: "vh-9",
+          name: "Hạt Giống Tâm Hồn Tập 2",
+          file: "/books/van-hoc/HatGiongTamHon2.pdf",
+        },
       ],
     },
     {
@@ -72,7 +82,106 @@ export const treeData = {
           id: "ls-2",
           name: "Đại Tướng Võ Nguyên Giáp",
           file: "/books/lich-su/DaiTuongVoNguyenGiap.epub",
-        }
+        },
+      ],
+    },
+    {
+      id: "nau-an",
+      name: "Nấu Ăn",
+      children: [
+        {
+          id: "na-1",
+          name: "60 Món Cơm Canh",
+          file: "/books/nau-an/60MonComCanh.pdf",
+        },
+        {
+          id: "na-2",
+          name: "50 Món Ăn Thái",
+          file: "/books/nau-an/50MonAnThai.pdf",
+        },
+        {
+          id: "na-3",
+          name: "60 Món Gà",
+          file: "/books/nau-an/60MonGa.pdf",
+        },
+        {
+          id: "na-4",
+          name: "60 Món Cua Cá Mực",
+          file: "/books/nau-an/60MonCuaCaMuc.pdf",
+        },
+        // {
+        //   id: "na-5",
+        //   name: "30 Món Ngon Đãi Tiệc",
+        //   file: "/books/nau-an/30MonNgonDaiTiec.pdf",
+        // },
+      ],
+    },
+    {
+      id: "giai-tri",
+      name: "Giải trí",
+      children: [
+        {
+          id: "gt-1",
+          name: "Giải Trí Đến Chết",
+          file: "/books/giai-tri/GiaiTriDenChet.epub",
+        },
+        {
+          id: "gt-2",
+          name: "99 Truyện Cười Dân Gian",
+          file: "/books/giai-tri/99TruyenCuoiDanGian.epub",
+        },
+        {
+          id: "gt-3",
+          name: "Vui Vẻ Không Quạu Nha",
+          file: "/books/giai-tri/VuiVeKhongQuauNha.pdf",
+        },
+        // {
+        //   id: "gt-4",
+        //   name: "Vua Bóng Đá",
+        //   file: "/books/giai-tri/VuaBongDa.epub",
+        // },
+      ],
+    },
+    {
+      id: "ky-nang",
+      name: "Kỹ năng",
+      children: [
+        {
+          id: "kn-1",
+          name: "Đắc Nhân Tâm",
+          file: "/books/ky-nang/DacNhanTam.epub",
+        },
+        {
+          id: "kn-2",
+          name: "7 Thói Quen Để Thành Đạt",
+          file: "/books/ky-nang/7ThoiQuenDeThanhDat.epub",
+        },
+        {
+          id: "kn-3",
+          name: "Thuật Quản Lý Thời Gian",
+          file: "/books/ky-nang/ThuatQuanLyThoiGian.epub",
+        },
+        {
+          id: "kn-4",
+          name: "Bí Quyết Học Đâu Nhớ Đó",
+          file: "/books/ky-nang/BiQuyetHocDauNhoDo.epub",
+        },
+      ],
+    },
+    {
+      id: "do-vui",
+      name: "Đố vui",
+      children: [
+        {
+          id: "dv-1",
+          name: "666 Câu Đố Vui Việt Nam",
+          file: "/books/do-vui/666CauDoVuiVietNam.epub",
+        },
+        {
+          id: "dv-2",
+          name: "Câu Đố Việt Nam",
+          file: "/books/do-vui/CauDoVietNam.pdf",
+        },
       ],
     },
   ],

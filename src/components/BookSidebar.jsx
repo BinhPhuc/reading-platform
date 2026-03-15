@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import { treeData } from "../data/books";
 
 const CATEGORY_META = {
-  "van-hoc":   { icon: "📚", color: "#e91e8c" },
-  "khoa-hoc":  { icon: "🔬", color: "#00bcd4" },
-  "lich-su":   { icon: "🏛️", color: "#ff9800" },
+  "van-hoc": { icon: "📚", color: "#e91e8c" },
+  "khoa-hoc": { icon: "🔬", color: "#00bcd4" },
+  "lich-su": { icon: "🏛️", color: "#ff9800" },
   "cong-nghe": { icon: "💻", color: "#7c4dff" },
-  "tam-ly":    { icon: "🧠", color: "#66bb6a" },
+  "tam-ly": { icon: "🧠", color: "#66bb6a" },
+  "nau-an": { icon: "🍳", color: "#f44336" },
+  "giai-tri": { icon: "🎬", color: "#9c27b0" },
+  "ky-nang": { icon: "⚒️", color: "#3f51b5" },
+  "do-vui": { icon: "📚", color: "#009688" },
 };
 
 const isPdf = (book) => book?.file?.toLowerCase().endsWith(".pdf");
@@ -27,7 +31,7 @@ async function extractEpubCover(bookFile) {
           item.properties?.includes("cover-image") ||
           item.id?.toLowerCase() === "cover" ||
           (item["media-type"]?.startsWith("image/") &&
-            item.href?.toLowerCase().includes("cover"))
+            item.href?.toLowerCase().includes("cover")),
       );
       if (candidate) {
         coverPath = book.resolve(candidate.href);
@@ -40,7 +44,9 @@ async function extractEpubCover(bookFile) {
   } catch {
     return null;
   } finally {
-    try { book.destroy(); } catch {}
+    try {
+      book.destroy();
+    } catch {}
   }
 }
 
@@ -63,7 +69,9 @@ export default function BookSidebar({ selectedBook, onSelectBook }) {
       setCovers((prev) => ({ ...prev, [b.id]: dataUrl }));
     });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const toggleCategory = (catId) => {
@@ -80,7 +88,10 @@ export default function BookSidebar({ selectedBook, onSelectBook }) {
       <div className="sidebar-list">
         {treeData.children.map((cat) => {
           const isOpen = !!openCategories[cat.id];
-          const meta = CATEGORY_META[cat.id] || { icon: "📁", color: "#4a90d9" };
+          const meta = CATEGORY_META[cat.id] || {
+            icon: "📁",
+            color: "#4a90d9",
+          };
 
           return (
             <div key={cat.id} className="sidebar-category">
@@ -91,7 +102,9 @@ export default function BookSidebar({ selectedBook, onSelectBook }) {
               >
                 <span className="sidebar-cat-icon">{meta.icon}</span>
                 <span className="sidebar-cat-name">{cat.name}</span>
-                <span className={`sidebar-chevron ${isOpen ? "sidebar-chevron--open" : ""}`}>
+                <span
+                  className={`sidebar-chevron ${isOpen ? "sidebar-chevron--open" : ""}`}
+                >
                   ▸
                 </span>
               </button>
@@ -102,7 +115,9 @@ export default function BookSidebar({ selectedBook, onSelectBook }) {
                     <li key={book.id}>
                       <button
                         className={`sidebar-book-btn ${
-                          selectedBook?.id === book.id ? "sidebar-book-btn--active" : ""
+                          selectedBook?.id === book.id
+                            ? "sidebar-book-btn--active"
+                            : ""
                         }`}
                         onClick={() => onSelectBook(book)}
                         title={book.name}
