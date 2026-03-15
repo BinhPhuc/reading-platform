@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import ePub from "epubjs";
 import { treeData } from "../data/books";
 
 const CATEGORY_META = {
@@ -12,20 +11,15 @@ const CATEGORY_META = {
 
 const isPdf = (book) => book?.file?.toLowerCase().endsWith(".pdf");
 
-/**
- * Extract epub cover as a base64 data URL.
- * Tries standard coverPath first, then scans the manifest as fallback.
- * Returns a data URL (not a blob URL) so it survives book.destroy().
- */
 async function extractEpubCover(bookFile) {
+  const { default: ePub } = await import("epubjs");
   const book = ePub(bookFile);
   try {
     await book.ready;
     await book.loaded.cover;
 
-    let coverPath = book.cover; // resolved path set by epubjs OPF parser
+    let coverPath = book.cover;
 
-    // Fallback: scan manifest when standard cover detection fails
     if (!coverPath) {
       const items = Object.values(book.packaging.manifest);
       const candidate = items.find(
@@ -42,7 +36,6 @@ async function extractEpubCover(bookFile) {
 
     if (!coverPath) return null;
 
-    // base64: true → data URL, never revoked by book.destroy()
     return await book.archive.createUrl(coverPath, { base64: true });
   } catch {
     return null;
