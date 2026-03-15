@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import BookSidebar from "./components/BookSidebar";
 import WelcomeContent from "./components/WelcomeContent";
-import EpubReader from "./components/EpubReader";
-import PdfReader from "./components/PdfReader";
+
+const EpubReader = lazy(() => import("./components/EpubReader"));
+const PdfReader = lazy(() => import("./components/PdfReader"));
 import "./App.css";
 
 const isPdf = (book) => book?.file?.toLowerCase().endsWith(".pdf");
@@ -73,11 +74,13 @@ export default function App() {
             <div
               className={`reader-panel${isClosing ? " reader-panel--closing" : ""}`}
             >
-              {isPdf(selectedBook) ? (
-                <PdfReader book={selectedBook} onClose={handleCloseReader} />
-              ) : (
-                <EpubReader book={selectedBook} onClose={handleCloseReader} />
-              )}
+              <Suspense fallback={<div className="pdf-status">Đang tải…</div>}>
+                {isPdf(selectedBook) ? (
+                  <PdfReader book={selectedBook} onClose={handleCloseReader} />
+                ) : (
+                  <EpubReader book={selectedBook} onClose={handleCloseReader} />
+                )}
+              </Suspense>
             </div>
           )}
         </div>
