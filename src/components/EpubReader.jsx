@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ReactReader } from "react-reader";
 
 export default function EpubReader({ book, onClose }) {
-  const [location, setLocation] = useState(null);
+  const locationRef = useRef(null);
+  const isSettledRef = useRef(false);
+  const settleTimerRef = useRef(null);
   const [toc, setToc] = useState([]);
   const [overlayKey, setOverlayKey] = useState(0);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  useEffect(() => {
+    return () => clearTimeout(settleTimerRef.current);
+  }, []);
 
   const handleLocationChanged = (loc) => {
-    setLocation(loc);
-    if (!isFirstLoad) {
+    locationRef.current = loc;
+
+    if (isSettledRef.current) {
       setOverlayKey((k) => k + 1);
     } else {
-      setIsFirstLoad(false);
+      clearTimeout(settleTimerRef.current);
+      settleTimerRef.current = setTimeout(() => {
+        isSettledRef.current = true;
+      }, 800);
     }
   };
 
@@ -32,7 +41,7 @@ export default function EpubReader({ book, onClose }) {
         )}
         <ReactReader
           url={book.file}
-          location={location}
+          location={null}
           locationChanged={handleLocationChanged}
           tocChanged={(t) => setToc(t)}
           epubOptions={{

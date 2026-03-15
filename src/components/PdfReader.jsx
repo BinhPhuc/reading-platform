@@ -32,7 +32,8 @@ export default function PdfReader({ book, onClose }) {
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
     setCurrentPage(1);
-    setRenderSet(new Set(Array.from({ length: Math.min(5, numPages) }, (_, i) => i + 1)));
+    const initialSet = new Set(Array.from({ length: Math.min(5, numPages) }, (_, i) => i + 1));
+    setRenderSet(initialSet);
   };
 
   useEffect(() => {
@@ -41,7 +42,6 @@ export default function PdfReader({ book, onClose }) {
     const root = bodyNodeRef.current;
     const thresholds = Array.from({ length: 11 }, (_, i) => i / 10);
 
-    // Theo dõi trang đang xem (trang có diện tích hiển thị lớn nhất)
     const pageObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -56,7 +56,6 @@ export default function PdfReader({ book, onClose }) {
       { root, threshold: thresholds },
     );
 
-    // Kiểm soát vùng render: chỉ render trang trong phạm vi 1.5 viewport
     const renderObserver = new IntersectionObserver(
       (entries) => {
         setRenderSet((prev) => {
@@ -88,7 +87,6 @@ export default function PdfReader({ book, onClose }) {
     ? Math.min(containerWidth - 48, 900)
     : undefined;
 
-  // Ước tính chiều cao theo tỉ lệ A4, dùng cho placeholder khi trang chưa render
   const estimatedHeight = pageWidth ? Math.round(pageWidth * 1.414) : 1100;
 
   return (
